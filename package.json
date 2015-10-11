@@ -14,8 +14,8 @@
 		"build-test": "browserify ./test > ./test/bundle.js"
 	},
 	"bin": {
-		"format-amount": "node ./bin",
-		"amount-format": "node ./bin"
+		"format-amount": "bin/index.js",
+		"amount-format": "bin/index.js"
 	},
 	"author": "Thomas Jensen <thomas@src.agency> (http://src.agency)",
 	"license": "MIT"
