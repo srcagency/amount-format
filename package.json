@@ -1,0 +1,22 @@
+{
+	"name": "amount-format",
+	"version": "0.0.1",
+	"description": "Format an amount according to a locale",
+	"repository": "srcagency/amount-format",
+	"dependencies": {
+		"minimist": "^1.2.0"
+	},
+	"devDependencies": {
+		"tape": "^4.2.1",
+		"browserify": "^11.2.0"
+	},
+	"scripts": {
+		"build-test": "browserify ./test > ./test/bundle.js"
+	},
+	"bin": {
+		"format-amount": "node ./bin",
+		"amount-format": "node ./bin"
+	},
+	"author": "Thomas Jensen <thomas@src.agency> (http://src.agency)",
+	"license": "MIT"
+}
