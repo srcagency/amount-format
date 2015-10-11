@@ -6,10 +6,12 @@ var argv = require('minimist')(process.argv.slice(2));
 var format = require('../');
 
 try {
-	if (!argv.amount)
+	if (argv._.length === 0)
 		throw new Error('Missing amount');
 
-	console.log(format(argv.locale || 'en', +argv.amount, argv.currency));
+	var amount = +argv._[0];
+
+	console.log(format(argv.locale || 'en', amount, argv.currency));
 } catch( e ){
 	console.error(e.message);
 	process.exit(1);
