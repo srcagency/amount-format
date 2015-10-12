@@ -28,5 +28,7 @@ test(function( t ){
 		amount: 100,
 	}), '1,00');
 
+	t.equal(format('da-DK', 100, 'sek'), 'SEK 1,00');
+
 	t.end();
 });
