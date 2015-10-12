@@ -1,6 +1,6 @@
 {
 	"name": "amount-format",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Format an amount according to a locale",
 	"repository": "srcagency/amount-format",
 	"dependencies": {
