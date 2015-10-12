@@ -15,10 +15,16 @@ function format( locale, amount, currency ){
 
 function figureToLocaleString( n, locale ){
 	if (n.toLocaleString && toLocaleStringSupportsOptions)
-		return n.toLocaleString(locale, {
+		return n.toLocaleString(Array.isArray(locale)
+			? locale.map(normalize)
+			: normalize(locale), {
 			minimumFractionDigits: 2,
 			style: 'decimal',
 		});
 
 	return n.toFixed(2);
+}
+
+function normalize( locale ){
+	return locale.replace('_', '-');
 }
