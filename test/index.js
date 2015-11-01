@@ -50,5 +50,9 @@ test(function( t ){
 		amount: 100,
 	}), '1,00');
 
+	t.equal(format('en', {
+		amount: 0,
+	}), '0.00');
+
 	t.end();
 });

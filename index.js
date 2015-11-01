@@ -8,7 +8,7 @@ module.exports = format;
 
 function format( locale, amount, currency ){
 	var currency = amount.currency || currency;
-	var figure = (amount.minor || amount.amount || amount) / 100;
+	var figure = (typeof amount === 'object' ? (amount.minor || amount.amount) : amount) / 100;
 
 	return (currency ? (currency+' ').toUpperCase() : '')+figureToLocaleString(figure, locale)
 }
