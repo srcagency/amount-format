@@ -54,5 +54,13 @@ test(function( t ){
 		amount: 0,
 	}), '0.00');
 
+	t.equal(format('en', 0), '0.00');
+
+	t.equal(format('en', -0), '0.00');
+
+	t.equal(format('en', -200), '-2.00');
+
+	t.equal(format('en', -200, 'NOK'), 'NOK -2.00');
+
 	t.end();
 });
