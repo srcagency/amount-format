@@ -54,6 +54,10 @@ test(function( t ){
 		amount: 0,
 	}), '0.00');
 
+	t.equal(format('en', {
+		minor: 0,
+	}), '0.00');
+
 	t.equal(format('en', 0), '0.00');
 
 	t.equal(format('en', -0), '0.00');
