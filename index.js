@@ -12,6 +12,9 @@ function format( locale, amount, currency ){
 		: (amount.amount !== undefined ? amount.amount
 		: amount);
 
+	if (typeof amount !== 'number' || isNaN(amount))
+		throw new Error('need amount as a number');
+
 	var figure = amount / 100;
 
 	return (currency ? (currency+' ').toUpperCase() : '')+figureToLocaleString(figure, locale)

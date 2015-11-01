@@ -66,5 +66,29 @@ test(function( t ){
 
 	t.equal(format('en', -200, 'NOK'), 'NOK -2.00');
 
+	t.throws(function(){
+		format('en', null, 'NOK');
+	}, 'invalid number format');
+
+	t.throws(function(){
+		format('en', NaN, 'NOK');
+	}, 'invalid number format');
+
+	t.throws(function(){
+		format('en', '2132', 'NOK');
+	}, 'invalid number format');
+
+	t.throws(function(){
+		format('en', {
+			minor: null,
+		});
+	}, 'invalid number format');
+
+	t.throws(function(){
+		format('en', {
+			amount: null,
+		});
+	}, 'invalid number format');
+
 	t.end();
 });
