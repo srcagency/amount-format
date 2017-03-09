@@ -1,36 +1,38 @@
 # Amount format
 
-Leverage the browser to format amounts according to a locale.
+A wrapper around `Number.prototype.toLocaleString`.
 
-**Work in progress**
-
-This module currently works by doing some manual decimal stuff that is really
-not localized since the state of browser internationalization is yet too bad.
-Once browsers catches up, it will be updated.
-
-```shell
-npm install amount-format --save
-```
+The purpose is to provide a unified API for formatting currency amounts
+regardless of browser support and whether the currency is known or not.
 
 ```js
-var format = require('amount-format');
+// modern browser
+format('da-DK', { currency: 'DKK', major: 1500.5 });
+	// 1.500,50 kr.
 
-format('da-DK', 210023, 'DKK');	// DKK 2.100,23
+// legacy browser
+format('da-DK', { currency: 'DKK', major: 1500.5 });
+	// DKK 1500.50
 
-format('da-DK', 210023);	// 2.100,23
+format({
+	locales: [ 'da-DK', 'en-GB' ],
+	display: 'code',
+	currency: 'GBP',
+}, 100.2);
+	// 100,20 GBP
 
-format('en', 210023);	// 2,100.23
-
-format('en', {
-	minor: 210023,
-	currency: 'DKK',
-});	// DKK 2,100.23
-
-format('da-DK', {
-	amount: 210023,
-	currency: 'DKK',
-});	// DKK 2.100,23
+format([ opts|locale,] amount|{ currency, major });
 ```
+
+Options are:
+
+- `currency` (three letter ISO)
+- `locale` (e.g. `da-DK` or simply `da`)
+- `locales` (an array of prioritized locales, left to right)
+- `display` (one of `symbol` (default), `code` or `name`)
+- `matcher` (`best fit` (default) or `lookup`)
+- `grouping` (whether to use thousand separators, detaults to `true`)
+- `minimumFractionDigits` (used only if localization is not supported, defaults to `2`)
 
 ```shell
 $ format-amount --currency USD 124422 --locale en-US

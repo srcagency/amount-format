@@ -1,18 +1,19 @@
 #!/usr/bin/env node
 'use strict';
 
-var argv = require('minimist')(process.argv.slice(2));
+const options = require('minimist')(process.argv.slice(2), {
+	string: [ 'amount', 'locale', 'currency', 'matcher', 'display' ],
+	boolean: [ 'no-grouping' ],
+});
 
-var format = require('../');
+const format = require('../');
 
-try {
-	if (argv._.length === 0)
-		throw new Error('Missing amount');
+const amount = options.amount || (options._[0] && +options._[0]);
 
-	var amount = +argv._[0];
-
-	console.log(format(argv.locale || 'en', amount, argv.currency));
-} catch( e ){
-	console.error(e.message);
-	process.exit(1);
-}
+console.log(format({
+	locale: options.locale,
+	matcher: options.matcher,
+	display: options.display,
+	grouping: !options['no-grouping'],
+	currency: options.currency,
+}, amount));

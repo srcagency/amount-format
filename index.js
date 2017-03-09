@@ -1,37 +1,48 @@
 'use strict';
 
-var toLocaleStringSupportsOptions =
-	typeof Intl === 'object'
+var supported = typeof Intl === 'object'
 	&& typeof Intl.NumberFormat === 'function';
 
 module.exports = format;
 
-function format( locale, amount, currency ){
-	var currency = amount.currency || currency;
-	var amount = amount.minor !== undefined ? amount.minor
-		: (amount.amount !== undefined ? amount.amount
-		: amount);
+function format( opts, amount ){
+	if (amount === undefined) {
+		amount = opts;
+		opts = {};
+	}
 
-	if (typeof amount !== 'number' || isNaN(amount))
-		throw new Error('need amount as a number');
+	var currency = opts.currency || amount.currency;
+	var major = amount.major || amount.amount || amount;
 
-	var figure = amount / 100;
+	if (typeof major !== 'number' || isNaN(major))
+		throw new Error('Missing amount or amount not a number');
 
-	return (currency ? (currency+' ').toUpperCase() : '')+figureToLocaleString(figure, locale)
-}
+	var minimumFractionDigits = opts.minimumFractionDigits === undefined
+		? 2
+		: opts.minimumFractionDigits;
 
-function figureToLocaleString( n, locale ){
-	if (n.toLocaleString && toLocaleStringSupportsOptions)
-		return n.toLocaleString(Array.isArray(locale)
-			? locale.map(normalize)
-			: normalize(locale), {
-			minimumFractionDigits: 2,
-			style: 'decimal',
+	if (!supported) {
+		if (currency)
+			return currency.toUpperCase()+' '+major.toFixed(minimumFractionDigits);
+
+		return major.toFixed(minimumFractionDigits);
+	}
+
+	var locales = typeof opts === 'string' || Array.isArray(opts)
+		? opts
+		: (opts.locales || opts.locale || 'en');
+
+	if (currency)
+		return major.toLocaleString(locales, {
+			style: 'currency',
+			currency: currency,
+			currencyDisplay: opts.display,
+			localeMatcher: opts.matcher,
+			useGrouping: opts.grouping,
 		});
 
-	return n.toFixed(2);
-}
-
-function normalize( locale ){
-	return locale.replace('_', '-');
+	return major.toLocaleString(locales, {
+		minimumFractionDigits: minimumFractionDigits,
+		useGrouping: opts.grouping,
+	});
 }
