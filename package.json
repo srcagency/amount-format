@@ -1,6 +1,6 @@
 {
 	"name": "amount-format",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Localization of currency amounts",
 	"repository": "srcagency/amount-format",
 	"dependencies": {
