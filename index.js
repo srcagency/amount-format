@@ -1,5 +1,7 @@
 'use strict';
 
+var defined = require('defined');
+
 var supported = typeof Intl === 'object'
 	&& typeof Intl.NumberFormat === 'function';
 
@@ -12,7 +14,7 @@ function format( opts, amount ){
 	}
 
 	var currency = opts.currency || amount.currency;
-	var major = amount.major || amount.amount || amount;
+	var major = defined(amount.major, amount.amount, amount);
 
 	if (typeof major !== 'number' || isNaN(major))
 		throw new Error('Missing amount or amount not a number');

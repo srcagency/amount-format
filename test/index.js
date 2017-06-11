@@ -28,11 +28,13 @@ test(function( t ){
 
 	t.equal(format('en', 0), '0.00');
 
+	t.equal(format('en', { currency: 'DKK', major: 0 }), 'DKK0.00');
+
 	t.equal(format('en', -0), '0.00');
 
 	t.equal(format('en', -200), '-200.00');
 
-	t.equal(format('en-US', { currency: 'NOK', major: -200}), '-NOK200.00');
+	t.equal(format('en-US', { currency: 'NOK', major: -200 }), '-NOK200.00');
 
 	t.throws(function(){
 		format('en');
@@ -40,6 +42,10 @@ test(function( t ){
 
 	t.throws(function(){
 		format('en', NaN);
+	}, 'Missing amount or amount not a number');
+
+	t.throws(function(){
+		format('en', { currency: 'DKK', major: NaN });
 	}, 'Missing amount or amount not a number');
 
 	t.throws(function(){

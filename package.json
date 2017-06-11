@@ -4,6 +4,7 @@
 	"description": "Localization of currency amounts",
 	"repository": "srcagency/amount-format",
 	"dependencies": {
+		"defined": "^1.0.0",
 		"minimist": "^1.2.0"
 	},
 	"devDependencies": {
